@@ -34,7 +34,9 @@
 
 let productsHTML = ' ';
 
+
 products.forEach((product) => {
+  // Generating the HTML for the products using the saved data
   productsHTML += `
    <div class="product-container">
           <div class="product-image-container">
@@ -80,12 +82,40 @@ products.forEach((product) => {
             Added
           </div>
 
-          <button class="add-to-cart-button button-primary">
+          <button class="add-to-cart-button button-primary js-add-to-cart"
+          data-product-id="${product.id}"> 
             Add to Cart
           </button>
         </div>
   `;
 });
-console.log(productsHTML);
+
 
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
+
+// Making the Add to Cart buttons interactive
+document.querySelectorAll('.js-add-to-cart').forEach((button) => {
+  button.addEventListener('click', () => {
+    const productId = button.dataset.productId;
+    // checking of the product is already in the cart.
+    let matchingItem;
+
+    cart.forEach((item) => {
+      if (productId === item.productId) {
+        matchingItem = item;
+      }
+    });
+    // Increasing the quantity of the product if it already exists in the  cart.
+
+    if (matchingItem) {
+      matchingItem.quantity++;
+    } else{
+    // If the product is not in the cart, adding it.
+    cart.push({
+      productId: productId,
+      quantity: 1
+    });
+    }
+    console.log(cart)
+  });
+});
