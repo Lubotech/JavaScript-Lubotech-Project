@@ -1,6 +1,7 @@
 // Imports are alwaya at the top
-import {cart} from '../data/cart.js';
+import {cart, addToCart} from '../data/cart.js';
 import { products } from '../data/products.js';
+
 
 // const products = [{
 //   image : 'images/products/athletic-cotton-socks-6-pairs.jpg',
@@ -98,37 +99,22 @@ products.forEach((product) => {
 
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
+function updateCartQuantity() {
+      // Calculate the quantity of the product
+      let cartQuantity = 0;
+
+      cart.forEach((cartItem) => {
+        cartQuantity += cartItem.quantity;
+      });
+      // Put the quantity on the page
+      document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+}
+
 // Making the Add to Cart buttons interactive
 document.querySelectorAll('.js-add-to-cart').forEach((button) => {
   button.addEventListener('click', () => {
     const productId = button.dataset.productId;
-    // checking of the product is already in the cart.
-    let matchingItem;
-
-    cart.forEach((item) => {
-      if (productId === item.productId) {
-        matchingItem = item;
-      }
-    });
-    // Increasing the quantity of the product if it already exists in the  cart.
-
-    if (matchingItem) {
-      matchingItem.quantity++;
-    } else{
-    // If the product is not in the cart, adding it.
-    cart.push({
-      productId: productId,
-      quantity: 1
-    });
-    }
-    // Calculate the quantity of the product
-    let cartQuantity = 0;
-
-    cart.forEach((item) => {
-      cartQuantity += item.quantity;
-    });
-    // Put the quantity on the page
-    document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
-
+    addToCart(productId);
+    updateCartQuantity();
   });
 });
