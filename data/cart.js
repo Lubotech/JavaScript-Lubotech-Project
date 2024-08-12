@@ -26,21 +26,47 @@ if (!cart) {
 // Function to add a product to the cart.
 export function addToCart(productId) {
   let matchingItem;
+  let addedMessageTimeoutId;
 
     cart.forEach((cartItem) => {
       if (productId === cartItem.productId) {
         matchingItem = cartItem;
       }
     });
+
+    const addedMessage = document.querySelector(
+      `.js-added-to-cart-${productId}`
+    );
+
+    addedMessage.classList.add('added-to-cart-visible');
+
+    // Check if a previous timeoutId exists. If it does,
+      // we will stop it.
+      if (addedMessageTimeoutId) {
+        clearTimeout(addedMessageTimeoutId);
+      }
+
+      const timeoutId = setTimeout(() => {
+        addedMessage.classList.remove('added-to-cart-visible');
+      }, 2000);
+
+      // Save the timeoutId so we can stop it later.
+      addedMessageTimeoutId = timeoutId;
     // Increasing the quantity of the product if it already exists in the  cart.
 
+    const quantitySelector = document.querySelector(
+      `.js-quantity-selector-${productId}`
+    );
+    
+    const quantity = Number(quantitySelector.value);
+
     if (matchingItem) {
-      matchingItem.quantity++;
+      matchingItem.quantity += quantity;
     } else{
     // If the product is not in the cart, adding it.
     cart.push({
       productId: productId,
-      quantity: 1,
+      quantity: quantity,
       deliveryOptionId:'1'
     });
     }
