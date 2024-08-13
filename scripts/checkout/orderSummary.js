@@ -11,6 +11,17 @@ import { renderPaymentSummary } from "./paymentSummary.js";
 //  const deliveryDate = today.add(7, 'days');
 // console.log(deliveryDate.format('dddd, MMMM D'));
 
+export function updateCartQuantity(){
+  let cartQuantity = 0;
+
+  cart.forEach((cartItem) => {
+    cartQuantity += cartItem.quantity;
+  });
+
+  document.querySelector('.js-return-to-home-link')
+    .innerHTML = `${cartQuantity} items`;
+}
+
 export function renderOrderSummary(){
     let cartSummaryHTML = '';
     cart.forEach((cartItem) => {
@@ -23,7 +34,9 @@ export function renderOrderSummary(){
 
     const deliveryOption = getDeliveryOption(deliveryOptionId);
 
-   
+
+
+    updateCartQuantity();
 
         const today = dayjs();
         const deliveryDate = today.add(deliveryOption.deliveryDays, 'days');
@@ -118,11 +131,13 @@ export function renderOrderSummary(){
       link.addEventListener('click', (event) => {
         const productId = link.dataset.productId;
         removeFromCart(productId);
+       
 
         const container = document.querySelector(`.js-cart-item-container-${productId}`);
         container.remove();
 
         renderPaymentSummary();
+        updateCartQuantity();
       });
       
     });
@@ -131,9 +146,11 @@ export function renderOrderSummary(){
       element.addEventListener('click', (event) => {
         const {productId, deliveryOptionId} = element.dataset;
         updateDeliveryOption(productId, deliveryOptionId);
+        
         renderOrderSummary();
         renderPaymentSummary();
       });
     });
 }    
+
 
