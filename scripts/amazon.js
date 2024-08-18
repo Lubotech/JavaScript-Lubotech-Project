@@ -1,5 +1,5 @@
-// Imports are alwaya at the top
-import {cart, addToCart} from '../data/cart.js';
+// Imports are always at the top
+import {cart, addToCart, calculateCartQuantity} from '../data/cart.js';
 import { products } from '../data/products.js';
 import {formatCurrency} from './utils/money.js';
 
@@ -104,17 +104,15 @@ document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
 function updateCartQuantity() {
       // Calculate the quantity of the product
-      let cartQuantity = 0;
-
-      cart.forEach((cartItem) => {
-        cartQuantity += cartItem.quantity;
-      });
+      const cartQuantity = calculateCartQuantity();
       // Put the quantity on the page
       document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
 
       
  
 }
+
+updateCartQuantity();
 
 // Making the Add to Cart buttons interactive
 document.querySelectorAll('.js-add-to-cart').forEach((button) => {
