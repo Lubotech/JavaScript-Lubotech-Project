@@ -56,7 +56,7 @@ class Clothing extends Product{
     return `<a href="${this.sizeChartLink}" target="_blank">Size Chart</a>`;
   }
 }
-//Practice code
+//Practice code 
 // const tshirt = new Clothing( {
 //   id: "83d4ca15-0f35-48f5-b7a3-1ea210004f2e",
 //   image: "images/products/adults-plain-cotton-tshirt-2-pack-teal.jpg",
@@ -78,6 +78,37 @@ class Clothing extends Product{
 // console.log(tshirt.getPrice());
 
 // Saved our site data in the Javascript
+
+// const date = new Date();
+// console.log(date);
+// console.log(date.toLocaleTimeString());
+/*
+console.log(this);
+
+const object2 = {
+  a: 2,
+  b: this.a,
+};
+*/
+
+/*
+function logThis() {
+  console.log(this);
+}
+logThis();
+logThis().call('hello');
+*/
+
+/*
+this
+const object3 = {
+  method: () => {
+    console.log(this);
+  }
+};
+object3.method();
+*/
+
 export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
